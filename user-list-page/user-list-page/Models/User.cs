@@ -1,4 +1,5 @@
-﻿using user_list_page.Services;
+﻿using System.ComponentModel.DataAnnotations;
+using user_list_page.Services;
 
 namespace user_list_page.Models
 {
@@ -7,19 +8,20 @@ namespace user_list_page.Models
         public int Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
+
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
+        [DataType(DataType.Date)]
         public DateTime DateOfBirth { get; set; }
         public string PhoneNumber { get; set; }
         public string Address { get; set; }
         public string FullName => FirstName + " " + LastName;
         public int Age => UserService.CalculateAge(DateOfBirth);
+        public Status Status { get; set; }
     }
 
-    /*
-     * <td>
-                    @Html.DisplayFor(modelItem => item.Age)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Action)
-                </td>
-     */
+    public enum Status
+    {
+        Married,
+        Single
+    }
 }

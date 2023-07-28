@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 using user_list_page.Context;
 using user_list_page.Models;
@@ -16,7 +17,7 @@ namespace user_list_page.Controllers
             _context = context;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(User user)
         {
             var users = _context.Users.Select(x => new User()
             {
@@ -30,12 +31,16 @@ namespace user_list_page.Controllers
 
             return View(users);
         }
-
+        
         [HttpPost]
         public IActionResult Add(User user)
         {
-            _context.Users.Add(user);
-            _context.SaveChanges();
+            if (ModelState.IsValid)
+            {
+                _context.Users.Add(user);
+                _context.SaveChanges();
+            }
+
             return RedirectToAction("Index");
         }
 

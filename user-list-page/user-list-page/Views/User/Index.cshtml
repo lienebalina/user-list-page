@@ -7,6 +7,10 @@
 
 }
 
+@* modal loga poga te *@
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+    Add User
+</button>
 
 @if (Model.Any())
 {
@@ -22,7 +26,6 @@
             <th>
                 @Html.DisplayName("Action")
             </th>
-
         </tr>
         </thead>
         <tbody>
@@ -35,6 +38,11 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.Age)
                 </td>
+                <td>
+                    @Html.DropDownList("UserStatus",
+                        new SelectList(Enum.GetValues(typeof(Status))),
+                        "Select action", new { @class = "form-control" })
+                </td>
             </tr>
         }
         </tbody>
@@ -44,10 +52,7 @@ else
 {
     <div><h1>404</h1></div>
 }
-@* modal loga poga te *@
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-    Launch demo modal
-</button>
+
 @* modal loga kods te *@
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -57,7 +62,33 @@ else
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                ...
+                @using (Html.BeginForm("Add", "User", FormMethod.Post))
+                {
+                    @foreach (var item in Model)
+                    {
+                        <div>
+                            <label class="control-label">First Name</label>
+                            <input name="FirstName" class="form-control" />
+                        </div>
+                        <div>
+                            <label class="control-label">Last Name</label>
+                            <input name="LastName" class="form-control" />
+                        </div>
+                        <div>
+                            <label class="control-label">Date Of Birth</label>
+                            <input name="DateOfBirth" class="form-control" type="datetime-local" />
+                        </div>
+                        <div>
+                            <label class="control-label">Phone Number</label>
+                            <input name="PhoneNumber" class="form-control" />
+                        </div>
+                        <div>
+                            <label class="control-label">Address</label>
+                            <input name="Address" class="form-control" />
+                        </div>
+                    }
+                    <input type="submit" value="Add Person" />
+                }
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
