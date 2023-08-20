@@ -16,7 +16,7 @@ namespace user_list_page.Models
         public string Address { get; set; }
         public string FullName => FirstName + " " + LastName;
         public int Age => UserService.CalculateAge(DateOfBirth);
-        public Status Status { get; set; }
+        //public Status Status { get; set; }
     }
 
     public enum Status

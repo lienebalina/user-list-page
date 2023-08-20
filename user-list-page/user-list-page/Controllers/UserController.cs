@@ -33,7 +33,7 @@ namespace user_list_page.Controllers
         }
         
         [HttpPost]
-        public IActionResult Add(User user)
+        public IActionResult Add([Bind("Id,FirstName,LastName,PhoneNumber,DateOfBirth,Address")] User user)
         {
             if (ModelState.IsValid)
             {
