@@ -104,11 +104,19 @@ else
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Select spouse</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
                 <div class="modal-body">
-
+                    <div>
+                        @Html.DropDownList("UserSpouse",
+                            new SelectList(Model.Select(s => s.SpouseName)),
+                        "Select action",
+                        new
+                        {
+                            @class = "form-control"
+                        })
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -121,13 +129,7 @@ else
 <script>
     function openModal(item) {
         var selectedStatus = item.value;
-        var spouse = "";
-
-        // Set the modal's title and content
-        $("#selectionModal .modal-title").text("Select Spouse");
-        $("#selectionModal .modal-body").html("<div>Spouse: " + spouse + "</div>");
-
-        // Open the modal
-        $("#selectionModal").modal("show");
+        if(selectedStatus == "Married"){ 
+        $("#selectionModal").modal("show"); }
     }
 </script>

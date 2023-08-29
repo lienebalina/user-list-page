@@ -15,6 +15,7 @@ namespace user_list_page.Models
         public string PhoneNumber { get; set; }
         public string Address { get; set; }
         public string FullName => FirstName + " " + LastName;
+        public string SpouseName => FullName + " (" + Age + ")";
         public int Age => UserService.CalculateAge(DateOfBirth);
         //public Status Status { get; set; }
     }
