@@ -7,5 +7,7 @@ namespace user_list_page.Context
     {
         public UserContext(DbContextOptions options) : base(options) { }
         public DbSet<User> Users { get; set; }
+        public DbSet<Address> Address { get; set; }
+        public DbSet<PhoneNumber> PhoneNumbers { get; set; }
     }
 }

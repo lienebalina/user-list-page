@@ -10,7 +10,6 @@ namespace user_list_page.Controllers
     {
         private readonly ILogger<UserController> _logger;
         private readonly UserContext _context;
-
         public UserController(ILogger<UserController> logger, UserContext context)
         {
             _logger = logger;
@@ -19,17 +18,27 @@ namespace user_list_page.Controllers
 
         public IActionResult Index(User user)
         {
+            //add users from modal inputs in index
+
+            var UserViewModel = (from u in _context.Users
+                                join a in _context.Address on u.Id equals a.UserId into ua
+                                from a in ua.DefaultIfEmpty()
+                                join p in _context.PhoneNumbers on u.Id equals p.UserId into upn
+                                from p in upn.DefaultIfEmpty()
+                                select new UserViewModel { UsersViewModel = u, AddressViewModel = a, PhoneNumberViewModel = p })
+                                .ToList() ?? new List<UserViewModel>();
+
             var users = _context.Users.Select(x => new User()
             {
                 Id = x.Id,
                 FirstName = x.FirstName,
                 LastName = x.LastName,
-                PhoneNumber = x.PhoneNumber,
+                PhoneNumbers = x.PhoneNumbers,
                 DateOfBirth = x.DateOfBirth,
-                Address = x.Address,
+                Addresses = x.Addresses,
             }).ToList() ?? new List<User>();
 
-            return View(users);
+            return View(UserViewModel);
         }
         
         [HttpPost]
