@@ -16,37 +16,27 @@ namespace user_list_page.Controllers
             _context = context;
         }
 
-        public IActionResult Index(User user)
+        public IActionResult Index(List<UserViewModel> userViewModel)
         {
-            //add users from modal inputs in index
+            userViewModel = (from u in _context.Users
+                                 join a in _context.Address on u.Id equals a.UserId into ua
+                                 from a in ua.DefaultIfEmpty()
+                                 join p in _context.PhoneNumbers on u.Id equals p.UserId into upn
+                                 from p in upn.DefaultIfEmpty()
+                             select new UserViewModel { UsersViewModel = u, AddressViewModel = a, PhoneNumberViewModel = p })
+                                .ToList();
 
-            var UserViewModel = (from u in _context.Users
-                                join a in _context.Address on u.Id equals a.UserId into ua
-                                from a in ua.DefaultIfEmpty()
-                                join p in _context.PhoneNumbers on u.Id equals p.UserId into upn
-                                from p in upn.DefaultIfEmpty()
-                                select new UserViewModel { UsersViewModel = u, AddressViewModel = a, PhoneNumberViewModel = p })
-                                .ToList() ?? new List<UserViewModel>();
-
-            var users = _context.Users.Select(x => new User()
-            {
-                Id = x.Id,
-                FirstName = x.FirstName,
-                LastName = x.LastName,
-                PhoneNumbers = x.PhoneNumbers,
-                DateOfBirth = x.DateOfBirth,
-                Addresses = x.Addresses,
-            }).ToList() ?? new List<User>();
-
-            return View(UserViewModel);
+            return View(userViewModel);
         }
-        
+
         [HttpPost]
-        public IActionResult Add([Bind("Id,FirstName,LastName,PhoneNumber,DateOfBirth,Address")] User user)
+        public IActionResult Add(User user, Address address, PhoneNumber phoneNumber)
         {
             if (ModelState.IsValid)
             {
                 _context.Users.Add(user);
+                _context.Address.Add(address);
+                _context.PhoneNumbers.Add(phoneNumber);
                 _context.SaveChanges();
             }
 

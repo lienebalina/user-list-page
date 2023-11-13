@@ -1,4 +1,4 @@
-﻿@model user_list_page.Models.User
+﻿@model user_list_page.Models.UserViewModel
 
 @{
     ViewData["Title"] = "Add";
@@ -18,24 +18,24 @@
                 @using (Html.BeginForm("Add", "User", FormMethod.Post))
                 {
                         <div>
-                            @Html.LabelFor(model => model.FirstName)
-                            @Html.TextBoxFor(model => model.FirstName)
+                            @Html.LabelFor(model => model.UsersViewModel.FirstName)
+                        @Html.TextBoxFor(model => model.UsersViewModel.FirstName)
                         </div>
                         <div>
-                            @Html.LabelFor(model => model.LastName)
-                            @Html.TextBoxFor(model => model.LastName)
+                        @Html.LabelFor(model => model.UsersViewModel.LastName)
+                        @Html.TextBoxFor(model => model.UsersViewModel.LastName)
                         </div>
                         <div>
-                            @Html.LabelFor(model => model.DateOfBirth)
-                            @Html.TextBoxFor(model => model.DateOfBirth, new { type = "datetime-local" })
+                        @Html.LabelFor(model => model.UsersViewModel.DateOfBirth)
+                        @Html.TextBoxFor(model => model.UsersViewModel.DateOfBirth, new { type = "datetime-local" })
                         </div>
                         <div>
-                            @Html.LabelFor(model => model.PhoneNumbers)
-                            @Html.TextBoxFor(model => model.PhoneNumbers)
+                        @Html.LabelFor(model => model.PhoneNumberViewModel.Number)
+                        @Html.TextBoxFor(model => model.PhoneNumberViewModel.Number)
                         </div>
                         <div>
-                            @Html.LabelFor(model => model.Addresses)
-                            @Html.TextBoxFor(model => model.Addresses)
+                        @Html.LabelFor(model => model.AddressViewModel.UserAddress)
+                        @Html.TextBoxFor(model => model.AddressViewModel.UserAddress)
                         </div>
                     
                 }

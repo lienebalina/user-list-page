@@ -5,5 +5,6 @@
         public int AddressId { get; set; }
         public string UserAddress { get; set; }
         public int UserId { get; set; }
+        public User User { get; set; }
     }
 }

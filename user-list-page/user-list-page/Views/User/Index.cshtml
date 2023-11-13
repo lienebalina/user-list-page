@@ -1,5 +1,5 @@
 ﻿@using System.Runtime.CompilerServices
-@model IEnumerable<user_list_page.Models.User>
+@model IEnumerable<user_list_page.Models.UserViewModel>
 
 @{
     ViewData["PageTitle"] = "Users";
@@ -34,10 +34,10 @@
         {
             <tr class="white">
                 <td>
-                    @Html.DisplayFor(modelItem => item.FullName)
+                    @Html.DisplayFor(modelItem => item.UsersViewModel.FullName)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Age)
+                        @Html.DisplayFor(modelItem => item.UsersViewModel.Age)
                 </td>
                 <td>
                     @Html.DropDownList("UserStatus",
@@ -71,23 +71,23 @@ else
 
                     <div>
                         <label class="control-label">First Name</label>
-                        <input name="FirstName" class="form-control"/>
+                        <input name="User.FirstName" class="form-control"/>
                     </div>
                     <div>
                         <label class="control-label">Last Name</label>
-                        <input name="LastName" class="form-control"/>
+                        <input name="User.LastName" class="form-control"/>
                     </div>
                     <div>
                         <label class="control-label">Date Of Birth</label>
-                        <input name="DateOfBirth" class="form-control" type="datetime-local"/>
+                        <input name="User.DateOfBirth" class="form-control" type="datetime-local" />
                     </div>
                     <div>
                         <label class="control-label">Phone Number</label>
-                        <input name="PhoneNumber" class="form-control"/>
+                        <input name="PhoneNumber.Number" class="form-control"/>
                     </div>
                     <div>
                         <label class="control-label">Address</label>
-                        <input name="Address" class="form-control"/>
+                        <input name="Address.UserAddress" class="form-control" />
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -108,13 +108,13 @@ else
             </div>
             <div class="modal-body">
                 <div>
-                    Spouse: @Html.DropDownList("UserSpouse",
-                                new SelectList(Model.Select(s => s.SpouseName)),
+                    @*Spouse: @Html.DropDownList("UserSpouse",
+                    new SelectList(Model.UsersViewModel.Select(s => s.SpouseName)),
                                 "Select action",
                                 new
                                 {
                                     @class = "form-control"
-                                })
+                                })*@
                 </div>
             </div>
             <div class="modal-footer">

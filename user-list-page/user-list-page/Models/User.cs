@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using user_list_page.Context;
 using user_list_page.Services;
 
 namespace user_list_page.Models
@@ -10,6 +11,7 @@ namespace user_list_page.Models
             this.PhoneNumbers = new HashSet<PhoneNumber>();
             this.Addresses = new HashSet<Address>();
         }
+
         [Key]
         public int Id { get; set; }
         public string FirstName { get; set; }
