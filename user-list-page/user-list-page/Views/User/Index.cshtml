@@ -1,5 +1,5 @@
 ﻿@using System.Runtime.CompilerServices
-@model IEnumerable<user_list_page.Models.UserViewModel>
+@model IEnumerable<user_list_page.Models.User>
 
 @{
     ViewData["PageTitle"] = "Users";
@@ -34,10 +34,10 @@
         {
             <tr class="white">
                 <td>
-                    @Html.DisplayFor(modelItem => item.UsersViewModel.FullName)
+                    @Html.DisplayFor(modelItem => item.FullName)
                 </td>
                 <td>
-                        @Html.DisplayFor(modelItem => item.UsersViewModel.Age)
+                        @Html.DisplayFor(modelItem => item.Age)
                 </td>
                 <td>
                     @Html.DropDownList("UserStatus",
@@ -71,23 +71,23 @@ else
 
                     <div>
                         <label class="control-label">First Name</label>
-                        <input name="User.FirstName" class="form-control"/>
+                        <input name="FirstName" class="form-control"/>
                     </div>
                     <div>
                         <label class="control-label">Last Name</label>
-                        <input name="User.LastName" class="form-control"/>
+                        <input name="LastName" class="form-control" />
                     </div>
                     <div>
                         <label class="control-label">Date Of Birth</label>
-                        <input name="User.DateOfBirth" class="form-control" type="datetime-local" />
+                        <input name="DateOfBirth" class="form-control" type="datetime-local" />
                     </div>
                     <div>
                         <label class="control-label">Phone Number</label>
-                        <input name="PhoneNumber.Number" class="form-control"/>
+                        <input name="PhoneNumbers[0].Number" class="form-control"/>
                     </div>
                     <div>
                         <label class="control-label">Address</label>
-                        <input name="Address.UserAddress" class="form-control" />
+                        <input name="Addresses[0].UserAddress" class="form-control" />
                     </div>
                 </div>
                 <div class="modal-footer">
