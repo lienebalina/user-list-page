@@ -81,14 +81,19 @@ else
                         <label class="control-label">Date Of Birth</label>
                         <input name="DateOfBirth" class="form-control" type="datetime-local" />
                     </div>
-                    <div>
-                        <label class="control-label">Phone Number</label>
-                        <input name="PhoneNumbers[0].Number" class="form-control"/>
+
+                    <label class="control-label">Phone Number</label>
+                    <div style="display: flex; align-items: center;">
+                        <div id="phoneNumbersContainer">
+                            <input name="PhoneNumbers[0].Number" class="form-control"/>
+                        </div>
+                        <button type="button" onclick="addPhoneNumber()" class="btn btn-primary" style="vertical-align: text-top;">+</button>
                     </div>
-                    <div>
+                    <div id="addressContainer">
                         <label class="control-label">Address</label>
                         <input name="Addresses[0].UserAddress" class="form-control" />
                     </div>
+                    <button type="button" onclick="addAddress()" class="btn btn-primary">+</button>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -153,5 +158,38 @@ else
         else {
             $("#singleModal").modal("show");
         }
+    }
+</script>
+
+<script>
+    var countNumbers = 1;
+
+    function addPhoneNumber() {
+        var container = document.getElementById('phoneNumbersContainer');
+        var newPhoneNumberDiv = document.createElement('div');
+        newPhoneNumberDiv.innerHTML = '<input name="PhoneNumbers[' + countNumbers + '].Number" class="form-control" />' +
+            '<button type="button" onclick="removeTextbox(this)">-</button>';
+        container.appendChild(newPhoneNumberDiv);
+        countNumbers++;
+    }
+</script>
+
+<script>
+    var countAddress = 1;
+
+    function addAddress() {
+        var container = document.getElementById('addressContainer');
+        var newAddressDiv = document.createElement('div');
+        newAddressDiv.innerHTML = '<input name="Addresses[' + countAddress + '].UserAddress" class="form-control" />' +
+            '<button type="button" onclick="removeTextbox(this)">-</button>';
+        container.appendChild(newAddressDiv);
+        countAddress++;
+    }
+</script>
+
+<script>
+    function removeTextbox(button) {
+        var entry = button.parentNode;
+        entry.parentNode.removeChild(entry);
     }
 </script>
