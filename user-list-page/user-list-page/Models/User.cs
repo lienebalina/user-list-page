@@ -20,6 +20,7 @@ namespace user_list_page.Models
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd-MM-yyyy}")]
         [DataType(DataType.Date)]
         public DateTime DateOfBirth { get; set; }
+        public string? Spouse;
         public virtual ICollection<PhoneNumber> PhoneNumbers { get; set; }
         public virtual ICollection<Address> Addresses { get; set; }
         public string FullName => FirstName + " " + LastName;

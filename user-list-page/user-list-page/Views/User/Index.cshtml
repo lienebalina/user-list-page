@@ -37,16 +37,14 @@
                     @Html.DisplayFor(modelItem => item.FullName)
                 </td>
                 <td>
-                        @Html.DisplayFor(modelItem => item.Age)
+                    @Html.DisplayFor(modelItem => item.Age)
                 </td>
                 <td>
-                    @Html.DropDownList("UserStatus",
-                        new SelectList(Enum.GetValues(typeof(Status))),
-                        "Select action", new
-                        {
-                            @class = "form-control",
-                            @onchange="openModal(this)"
-                        })
+                    <select placeholder="Select Status" id="selectStatus" onchange="openModal(this)" AutoPostBack="true">
+                        <option value="" default="" selected="">Select status</option>
+                        <option value="Married">Married</option>
+                        <option value="Single">Single</option>
+                    </select>
                 </td>
             </tr>
         }
@@ -83,17 +81,20 @@ else
                     </div>
 
                     <label class="control-label">Phone Number</label>
-                    <div style="display: flex; align-items: center;">
+                    <div style="display: flex; align-items: center;justify-content: center;">
                         <div id="phoneNumbersContainer">
                             <input name="PhoneNumbers[0].Number" class="form-control"/>
                         </div>
-                        <button type="button" onclick="addPhoneNumber()" class="btn btn-primary" style="vertical-align: top;">+</button>
+                        <button type="button" onclick="addPhoneNumber()" class="btn btn-primary" style="align-self: flex-start; ">+</button>
                     </div>
-                    <div id="addressContainer">
-                        <label class="control-label">Address</label>
-                        <input name="Addresses[0].UserAddress" class="form-control" />
+
+                    <label class="control-label">Address</label>
+                    <div style="display: flex; align-items: center;justify-content: center;">
+                        <div id="addressContainer">
+                            <input name="Addresses[0].UserAddress" class="form-control" />
+                        </div>
+                        <button type="button" onclick="addAddress()" class="btn btn-primary" style="align-self: flex-start; ">+</button>
                     </div>
-                    <button type="button" onclick="addAddress()" class="btn btn-primary">+</button>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -113,18 +114,18 @@ else
             </div>
             <div class="modal-body">
                 <div>
-                    @*Spouse: @Html.DropDownList("UserSpouse",
-                    new SelectList(Model.UsersViewModel.Select(s => s.SpouseName)),
-                                "Select action",
-                                new
-                                {
-                                    @class = "form-control"
-                                })*@
+                    <label class="control-label">Spouse:</label>
+                    <select placeholder="Select Spouse" id="selectSpouse" onchange="openModal(item)" AutoPostBack="true">
+                        <option value="" default="" selected="">Select spouse</option>
+                        @foreach (var item in Model){
+                            <option value="@item.Id">@item.SpouseName</option>
+                        }
+                    </select>
                 </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-primary">Save</button>
+                <button type="submit" class="btn btn-primary" onclick="chooseSpouse()">Save</button>
             </div>
         </div>
     </div>
@@ -151,13 +152,34 @@ else
 </div>
 
 <script>
-    function openModal(item) {
-        var selectedStatus = item.value;
-        if(selectedStatus == "Married"){ 
-        $("#marriedModal").modal("show"); }
-        else {
+    var userId = "";
+
+    function openModal(selectedUser) {
+        var userId = selectedUser.Id;
+        var selectedValue = selectedUser.value;
+        if (selectedValue == "Married") {
+            $("#marriedModal").modal("show"); 
+        }
+        else if(selectedValue == "Single") {
             $("#singleModal").modal("show");
         }
+    }
+
+    console.log(userId);
+
+    function getUserId(user){
+        var row = user.this;
+        var userId = row.dataset.Id;
+
+        return userId;
+    }
+</script>
+
+<script>
+    function chooseSpouse() {
+        var chosenSpouse = $("#selectSpouse").val();
+        var selectedUserId = 
+        
     }
 </script>
 
@@ -167,8 +189,11 @@ else
     function addPhoneNumber() {
         var container = document.getElementById('phoneNumbersContainer');
         var newPhoneNumberDiv = document.createElement('div');
+        newPhoneNumberDiv.style.display = 'flex';
+        newPhoneNumberDiv.style.alignItems = 'center';
+        newPhoneNumberDiv.style.justifyContent = 'center'
         newPhoneNumberDiv.innerHTML = '<input name="PhoneNumbers[' + countNumbers + '].Number" class="form-control" />' +
-            '<button type="button" onclick="removeTextbox(this)">-</button>';
+            '<button type="button" class="btn btn-primary" style="align-self: flex-start;" onclick="removeTextbox(this)">-</button>';
         container.appendChild(newPhoneNumberDiv);
         countNumbers++;
     }
@@ -180,8 +205,11 @@ else
     function addAddress() {
         var container = document.getElementById('addressContainer');
         var newAddressDiv = document.createElement('div');
+        newAddressDiv.style.display = 'flex';
+        newAddressDiv.style.alignItems = 'center';
+        newAddressDiv.style.justifyContent = 'center';
         newAddressDiv.innerHTML = '<input name="Addresses[' + countAddress + '].UserAddress" class="form-control" />' +
-            '<button type="button" onclick="removeTextbox(this)">-</button>';
+            '<button type="button" class="btn btn-primary" style="align-self: flex-start;" onclick="removeTextbox(this)">-</button>';
         container.appendChild(newAddressDiv);
         countAddress++;
     }
