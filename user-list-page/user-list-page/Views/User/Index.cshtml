@@ -155,7 +155,6 @@ else
     var userId = "";
 
     function openModal(selectedUser) {
-        var userId = selectedUser.Id;
         var selectedValue = selectedUser.value;
         if (selectedValue == "Married") {
             $("#marriedModal").modal("show"); 
@@ -166,13 +165,6 @@ else
     }
 
     console.log(userId);
-
-    function getUserId(user){
-        var row = user.this;
-        var userId = row.dataset.Id;
-
-        return userId;
-    }
 </script>
 
 <script>
